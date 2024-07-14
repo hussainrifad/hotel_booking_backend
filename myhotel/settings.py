@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-hvtt^(_u09et$7=l@i8)^#*st5h+u7t$#)6hy87_kf@v-m1454
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ['hotel-booking-backend-e3cs.onrender.com','https://*.127.0.0.1']
 
 
 # Application definition

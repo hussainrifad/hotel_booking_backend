@@ -1,0 +1,9 @@
+asgiref
+Django
+django-filter
+djangorestframework
+Markdown
+pillow
+python-dotenv
+sqlparse
+tzdata

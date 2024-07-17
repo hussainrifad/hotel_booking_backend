@@ -12,7 +12,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.utils.encoding import force_bytes
 from rest_framework.response import Response
 from django.shortcuts import redirect
-from rest_framework.parsers import MultiPartParser, FormParser
 
 # Create your views here.
 
@@ -22,7 +21,6 @@ class CustomerViewSet(ModelViewSet):
 
 class RegistrationApiView(APIView):
     serializer_class = RegistrationSerializer
-    parser_classes= (MultiPartParser, FormParser)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)

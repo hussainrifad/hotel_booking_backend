@@ -76,6 +76,10 @@ class CustomerLoginSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
 
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+
 
 # password validation
 password_pattern = r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'

@@ -46,6 +46,7 @@ class RegistrationApiView(APIView):
 
 
 class CustomerLoginView(APIView):
+
     def post(self, request):
         serializer = CustomerLoginSerializer(data=request.data)
         
@@ -64,6 +65,7 @@ class CustomerLoginView(APIView):
         return Response(serializer.errors)
 
 class CustomerLogoutView(APIView):
+    
     def get(self, request):
         request.user.auth_token.delete()
         logout(request=request)

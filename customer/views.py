@@ -54,8 +54,7 @@ class CustomerLoginView(APIView):
             username = serializer.validated_data['username']
             password = serializer.validated_data['password']
 
-            user = authenticate(username=username, password=password)
-
+            user = authenticate()
             if user:
                 token, _ = Token.objects.get_or_create(user=user)
                 login(request=request, user=user)
@@ -65,7 +64,7 @@ class CustomerLoginView(APIView):
         return Response(serializer.errors)
 
 class CustomerLogoutView(APIView):
-    
+
     def get(self, request):
         request.user.auth_token.delete()
         logout(request=request)

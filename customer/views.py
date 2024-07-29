@@ -60,7 +60,7 @@ class CustomerLoginView(APIView):
                 print(user)
                 token, created = Token.objects.get_or_create(user=user)
                 login(request=request, user=user)
-                return Response({'token':token.key, 'user_id':user.id})
+                return Response({'token':token.key, 'user_id':user.customer.id})
             else:
                 return Response({'error':'Invalid Credential'})
         return Response(serializer.errors)

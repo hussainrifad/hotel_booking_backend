@@ -75,7 +75,7 @@ class CustomerLogoutView(APIView):
 class DepositeBalanceView(APIView):
     serializer_class = DepositeBalanceSerializer
 
-    def put(self, request):
+    def post(self, request):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():

@@ -9,5 +9,6 @@ router.register('bookings', views.BookingViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    
+    path('reviews/get/<int:hotel_id>/', views.HotelReviewsView.as_view(), name='hotelreview'),
+
 ]

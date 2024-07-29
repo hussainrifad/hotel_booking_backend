@@ -40,3 +40,16 @@ class BookingViewSet(ModelViewSet):
             return Response({'success':'booking confirmed'})
         
         return Response(serializer.errors)
+
+
+class HotelReviewsView(APIView):
+    
+    def get(self, request, hotel_id):
+        try:
+            hotel = Hotel.objects.get(pk=hotel_id)
+        except Hotel.DoesNotExist:
+            return Response({'error': 'Hotel not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        reviews = hotel.reviews.all() 
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

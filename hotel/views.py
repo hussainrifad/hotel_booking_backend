@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 from .serializers import HotelSerializer, ReviewSerializer, BookingSerializer
 from .models import Hotel, Review, Booking
 from django.core.mail import send_mail

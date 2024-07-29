@@ -80,7 +80,8 @@ class DepositeBalanceView(APIView):
 
         if serializer.is_valid():
             amount = serializer.validated_data['amount']
-            account = request.user.account
-            account.balance += amount
-            account.save()
-        return Response({'message': 'money added'})
+            customer = Customer.objects.get(user=request.user)
+            customer.balance += amount
+            customer.save()
+            return Response({'status': 'success', 'new_balance': customer.balance}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

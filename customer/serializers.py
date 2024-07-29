@@ -97,3 +97,7 @@ class DepositeBalanceSerializer(serializers.Serializer):
         model = Customer
         fields = ['amount']
     
+    def validate_amount(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Deposit amount must be greater than zero.")
+        return value

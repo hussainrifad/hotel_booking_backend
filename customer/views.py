@@ -72,21 +72,15 @@ class CustomerLogoutView(APIView):
         logout(request=request)
         return redirect('login')
 
-
 class DepositeBalanceView(APIView):
-
     serializer_class = DepositeBalanceSerializer
-    # def get(self, request, pk):
-    #     print(pk)
-    #     return Response({'pk':pk})
 
     def put(self, request):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
             amount = serializer.validated_data['amount']
-            account = request.user.account  
-            print(account)
-            print(amount)
-
-        return Response({'message':'Everything is fine'}) 
+            account = request.user.account
+            account.balance += amount
+            account.save()
+        return Response({'message': 'money added'})

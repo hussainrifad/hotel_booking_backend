@@ -88,3 +88,12 @@ def validate_password(password):
     if password_regex.fullmatch(password):
         return True
     return False
+
+
+class DepositeBalanceSerializer(serializers.Serializer):
+    amount = serializers.DecimalField(max_digits=12, decimal_places=2)
+
+    class Meta:
+        model = Customer
+        fields = ['amount']
+    

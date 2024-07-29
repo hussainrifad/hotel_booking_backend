@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import CustomerSerializer, RegistrationSerializer, CustomerLoginSerializer
+from .serializers import CustomerSerializer, RegistrationSerializer, CustomerLoginSerializer, DepositeBalanceSerializer
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from .models import Customer
@@ -51,12 +51,14 @@ class CustomerLoginView(APIView):
         serializer = CustomerLoginSerializer(data=request.data)
         
         if serializer.is_valid():
-            username = serializer.validated_data['username']
-            password = serializer.validated_data['password']
-
-            user = authenticate()
+            user_name = serializer.validated_data['username']
+            user_password = serializer.validated_data['password']
+            
+            user = authenticate(username=user_name, password=user_password)
+            print(user)
             if user:
-                token, _ = Token.objects.get_or_create(user=user)
+                print(user)
+                token, created = Token.objects.get_or_create(user=user)
                 login(request=request, user=user)
                 return Response({'token':token.key, 'user_id':user.id})
             else:
@@ -69,3 +71,22 @@ class CustomerLogoutView(APIView):
         request.user.auth_token.delete()
         logout(request=request)
         return redirect('login')
+
+
+class DepositeBalanceView(APIView):
+
+    serializer_class = DepositeBalanceSerializer
+    # def get(self, request, pk):
+    #     print(pk)
+    #     return Response({'pk':pk})
+
+    def put(self, request):
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            amount = serializer.validated_data['amount']
+            account = request.user.account  
+            print(account)
+            print(amount)
+
+        return Response({'message':'Everything is fine'}) 

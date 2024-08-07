@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-hvtt^(_u09et$7=l@i8)^#*st5h+u7t$#)6hy87_kf@v-m1454
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['https://hotel-booking-backend-e3cs.onrender.com','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://hotel-booking-backend-u4dd.onrender.com','https://*.127.0.0.1']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition

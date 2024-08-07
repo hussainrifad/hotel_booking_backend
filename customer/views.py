@@ -12,6 +12,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.utils.encoding import force_bytes
 from rest_framework.response import Response
 from rest_framework import status
+from django.conf import settings
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -31,19 +33,29 @@ class RegistrationApiView(APIView):
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.id))
 
-            try:
-                new_uid = urlsafe_base64_decode(uid).decode()
-                user = User._default_manager.get(id=new_uid)
-            except(User.DoesNotExist):
-                user = None
-            
-            if user is not None and default_token_generator.check_token(user, token):
-                user.is_active = True
-                user.save()
-                return Response({'success':'customer created successfully'})
-            
+            confirm_link = f'https://hotel-booking-backend-u4dd.onrender.com/customer/active/{uid}/{token}'
+            email_subject = 'Confirm your email'
+            email_body = f'Please confirm your email using this link {confirm_link}'
+            email_from = settings.EMAIL_HOST_USER
+            send_mail(email_subject, email_body, email_from, user.email)
+            return Response('Check your email')
         return Response(serializer.errors)
 
+def activate(request, uid64, token):
+
+    try:
+        new_uid = urlsafe_base64_decode(uid64).decode()
+        user = User._default_manager.get(id=new_uid)
+        
+    except(User.DoesNotExist):
+        user = None
+            
+        if user is not None and default_token_generator.check_token(user, token):
+            user.is_active = True
+            user.save()
+            return redirect('login')
+        else:
+            return redirect('registration')
 
 class CustomerLoginView(APIView):
 

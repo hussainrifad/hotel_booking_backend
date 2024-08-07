@@ -42,7 +42,6 @@ class RegistrationApiView(APIView):
         return Response(serializer.errors)
 
 def activate(request, uid64, token):
-
     try:
         new_uid = urlsafe_base64_decode(uid64).decode()
         user = User._default_manager.get(id=new_uid)
